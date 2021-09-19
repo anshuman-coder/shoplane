@@ -87,11 +87,28 @@ $(document).ready(function() {
             amount: grandTotal,
             products: orderItemArr
         }
-        $.post('https://5d76bf96515d1a0014085cf9.mockapi.io/order', dataObj, function() {
-            alert('Order Placed Successfully')
-            localStorage.setItem('product-list', []);
+        // $.post('https://5d76bf96515d1a0014085cf9.mockapi.io/order', dataObj, function() {
+        //     alert('Order Placed Successfully')
+        //     localStorage.setItem('product-list', []);
 
-            location.assign('/thankyou.html');
-        }).fail((err) => {console.log(err) })
+        //     location.assign('/thankyou.html');
+        // }).fail((err) => {console.log(err) })
+
+        $.ajax({
+            type: "POST",
+            url: "https://5d76bf96515d1a0014085cf9.mockapi.io/order",
+            data: JSON.stringify(dataObj),
+            contentType: "application/json",
+            success: function (res) {
+                console.log(res);
+                alert("Order Placed Successfully");
+                localStorage.setItem('product-list', []);
+
+                location.assign('/thankyou.html');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
     })
 })
